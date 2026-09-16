@@ -1,0 +1,38 @@
+---
+const { entry } = Astro.locals.starlightRoute;
+import ChipLink from './ChipLink.astro';
+import ChipShops from './ChipShops.astro';
+import { Image } from 'astro:assets';
+
+const { discordChannel, githubRepo, shops, logo }  = entry.data;
+---
+
+<div class="relative isolate flex flex-col sm:flex-row gap-3">
+    <h1 id="_top">{entry.data.title}</h1>
+    <div class="sm:ml-auto flex flex-wrap gap-2 sm:flex-col">
+        {
+            discordChannel !== undefined &&
+            <ChipLink icon="discord" label="Discord Channel" href={ discordChannel }/>
+        }
+        {
+            githubRepo !== undefined &&
+            <ChipLink icon="github" label="Github Repo" href={ githubRepo }/>
+        }
+        {
+            shops !== undefined &&
+            <ChipShops shops={ shops }/>
+        }
+    </div>
+    { logo && 
+        <Image src={logo} alt="The Logo of the project." class="invert opacity-10 absolute top-10 right-2 w-80 h-auto rotate-[20deg] dark:invert-0 -z-10 pointer-events-none"/>
+    }
+</div>
+
+<style>
+	h1 {
+		font-size: var(--sl-text-h1);
+		line-height: var(--sl-line-height-headings);
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+</style>
